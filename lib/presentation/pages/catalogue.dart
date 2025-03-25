@@ -21,12 +21,13 @@ class _Catelogue_PageState extends State<Catelogue_Page> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    BlocProvider.of<ProductBloc>(context).add(LoadProducts());
+    BlocProvider.of<ProductBloc>(context).add(LoadProducts(page: 0));
 
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
-        BlocProvider.of<ProductBloc>(context).add(LoadProducts());
+      if (_scrollController.position.pixels >=
+          _scrollController.position.maxScrollExtent - 100) {
+        final productBloc = BlocProvider.of<ProductBloc>(context);
+        BlocProvider.of<ProductBloc>(context).add(LoadProducts(page: productBloc.currentPage));
       }
     });
   }
@@ -90,20 +91,22 @@ class _Catelogue_PageState extends State<Catelogue_Page> {
       backgroundColor: Color(0xFFFFEBEB),
       body: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
-          if (state is ProductLoading && (state is ProductInitial)) {
+          final productBloc = BlocProvider.of<ProductBloc>(context);
+          if (state is ProductLoading && productBloc.currentPage == 0) {
             return Center(child: CircularProgressIndicator());
           } else if (state is ProductError) {
             return Center(child: CircularProgressIndicator());
           } else if (state is ProductLoaded) {
             return GridView.builder(
+              controller: _scrollController,
               gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 mainAxisExtent: 300,
               ),
-              itemCount: state.products.length + (state.hasMore ? 1 : 0),
-              itemBuilder: (BuildContext context, int index) {
+              itemCount: state.products.length + (state.hasMore ? 2 : 0),
+              itemBuilder: (context, index) {
                 if (index >= state.products.length) {
-                  return Center();
+                  return Center(child: CircularProgressIndicator());
                 }
                 final product = state.products[index];
                 return _buildProductTile(context, product);

@@ -188,28 +188,29 @@ class Cart_Page extends StatelessWidget {
               children: [
                 Text(
                   "Total: ${(product.discountedPrice * quantity).toStringAsFixed(2)}",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 13),
                 ),
                 Spacer(),
                 Container(
                   height: 35,
                   decoration: BoxDecoration(
+
                     color: Colors.grey[300],
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Row(
                     children: [
                       IconButton(
-                        icon: Icon(Icons.remove, size: 15),
+                        icon: Icon(Icons.remove, size: 13),
                         onPressed: () {
                           BlocProvider.of<CartBloc>(
                             context,
                           ).add(UpdateQuantity(product, quantity - 1));
                         },
                       ),
-                      Text(quantity.toString(), style: TextStyle(fontSize: 14)),
+                      Text(quantity.toString(), style: TextStyle(fontSize: 12)),
                       IconButton(
-                        icon: Icon(Icons.add, size: 15),
+                        icon: Icon(Icons.add, size: 13),
                         onPressed: () {
                           BlocProvider.of<CartBloc>(
                             context,

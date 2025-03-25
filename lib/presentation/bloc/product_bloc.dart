@@ -7,30 +7,32 @@ import 'package:shopping_project/presentation/bloc/product_event.dart';
 import 'package:shopping_project/presentation/bloc/product_state.dart';
 
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
-  final Product_Fetcher _data = Product_Fetcher();
-  List<ProductModel> _allProducts = [];
-  bool _hasMore = true;
+  final Product_Fetcher productFetcher;
   int _currentPage = 0;
-  final int _limit = 50;
+  bool _hasMore = true;
+  List<ProductModel> _allProducts = [];
 
-  ProductBloc() : super(ProductInitial()){
-    on<LoadProducts>(_onLoadProducts);
-  }
+  int get currentPage => _currentPage;
 
-  Future<void> _onLoadProducts(LoadProducts event, Emitter<ProductState> emit) async {
-    if(!_hasMore) return;
+  ProductBloc({required this.productFetcher}) : super(ProductInitial()) {
+    on<LoadProducts>((event, emit) async {
+      if (!_hasMore) return;
 
-    emit(ProductLoading());
+      try {
+        if (_currentPage == 0) {
+          emit(ProductLoading());
+        }
 
-    try {
-      final products = await _data.fetchProducts(_currentPage, _limit);
-      _allProducts.addAll(products);
-      _hasMore = products.length == _limit;
-      _currentPage++;
+        final newProducts = await productFetcher.fetchProducts(_currentPage, event.limit);
+        _hasMore = newProducts.isNotEmpty;
 
-      emit(ProductLoaded(products: _allProducts, hasMore: _hasMore));
-    } catch (e) {
-      emit(ProductError(e.toString()));
-    }
+        _allProducts.addAll(newProducts);
+        _currentPage++;
+
+        emit(ProductLoaded(products: _allProducts, hasMore: _hasMore));
+      } catch (e) {
+        emit(ProductError("Failed to load products"));
+      }
+    });
   }
 }
