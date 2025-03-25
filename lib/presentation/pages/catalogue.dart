@@ -112,16 +112,6 @@ class _Catelogue_PageState extends State<Catelogue_Page> {
                 return _buildProductTile(context, product);
               },
             );
-            // return ListView.builder(
-            //   itemCount: state.products.length + (state.hasMore ? 1 : 0),
-            //     itemBuilder: (context, index){
-            //     if(index >= state.products.length){
-            //       return Center();
-            //     }
-            //     final product = state.products[index];
-            //     return _buildProductTile(context, product);
-            // }
-            // );
           }
           return Container();
         },
@@ -189,24 +179,6 @@ class _Catelogue_PageState extends State<Catelogue_Page> {
           ),
         ),
       ),
-      // ListTile(
-      //   leading: Image.network(
-      //     product.thumbnail,
-      //     width: 50,
-      //     height: 50,
-      //     fit: BoxFit.cover,
-      //   ),
-      //   title: Text(product.title),
-      //   subtitle: Text(
-      //     "₹${product.discountedPrice.toStringAsFixed(2)} (₹${product.price})",
-      //   ),
-      //   trailing: IconButton(
-      //     icon: Icon(Icons.add_shopping_cart),
-      //     onPressed: () {
-      //       BlocProvider.of<CartBloc>(context).add(AddToCart(product));
-      //     },
-      //   ),
-      // ),
     );
   }
 }

@@ -92,10 +92,10 @@ class Cart_Page extends StatelessWidget {
                                   SizedBox(width: 8),
                                 ],
                               ),
-                              if (state.noofItems > 0) // ✅ Only show badge if items are present
+                              if (state.noofItems > 0)
                                 Positioned(
                                   top: -5,
-                                  right: 4,
+                                  right: 14,
                                   child: Container(
                                     padding: EdgeInsets.all(6),
                                     decoration: BoxDecoration(
