@@ -56,11 +56,6 @@ Copy
 Edit
 lib/
 │
-├── core/
-│   ├── constants/
-│   │   └── app_strings.dart
-│   ├── theme/
-│   │   └── app_theme.dart
 │
 ├── data/
 │   ├── models/
@@ -70,14 +65,12 @@ lib/
 │
 ├── presentation/
 │   ├── bloc/
-│   │   ├── product/
-│   │   │   ├── product_bloc.dart
-│   │   │   ├── product_event.dart
-│   │   │   └── product_state.dart
-│   │   ├── cart/
-│   │   │   ├── cart_bloc.dart
-│   │   │   ├── cart_event.dart
-│   │   │   └── cart_state.dart
+│   │   ├── product_bloc.dart
+│   │   ├── product_event.dart
+│   │   ├── product_state.dart
+│   │   ├── cart_bloc.dart
+│   │   ├── cart_event.dart
+│   │   ├── cart_state.dart
 │   ├── pages/
 │   │   ├── catelogue_page.dart
 │   │   ├── cart_page.dart
